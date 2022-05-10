@@ -1,0 +1,46 @@
+#include <stdio.h>
+#include <vector>
+
+// Time complexity: O( n^3 )
+
+const int UNDEF = 0;
+
+int main() {
+    int nV;
+    scanf("%d", &nV);
+
+    std::vector <std::vector <int>> table(nV, std::vector <int>(nV, UNDEF));
+    for (int from = 0; from < nV; from++) {
+        for (int to = 0; to < nV; to++) {
+            scanf("%d", &table[from][to]);
+        }
+    }
+
+    for (int from = 0; from < nV; from++) {
+        for (int to = 0; to < nV; to++) {
+            for (int inter = 0; inter < nV; inter++) {
+                if (table[from][to] < table[from][inter] + table[inter][to]
+                    && table[from][inter] != UNDEF
+                    && table[inter][to] != UNDEF) {
+                    table[from][to] = table[from][inter] + table[inter][to];
+                }
+            }
+        }
+    }
+
+    for (int from = 0; from < nV; from++) {
+        for (int to = 0; to < nV; to++) {
+            for (int inter = 0; inter < nV; inter++) {
+                if (table[from][to] < table[from][inter] + table[inter][to]
+                    && table[from][inter] != UNDEF
+                    && table[inter][to] != UNDEF) {
+                    printf("Yes");
+                    return 0;
+                }
+            }
+        }
+    }
+
+    printf("No");
+    return 0;
+}
